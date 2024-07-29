@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="5.0" method="upgrade">
+  <name>COM_DOWNLOAD</name>
+  <author>Denis</author>
+  <creationDate>2022/03/09</creationDate>
+  <copyright>Copyright Info</copyright>
+  <license>GNU General Public License version 3, or later</license>
+  <authorEmail>drift2000@gmail.com</authorEmail>
+  <authorUrl>https://github.com/drift2000/</authorUrl>
+  <version>2.1.3.2</version>
+  <description>COM_DOWNLOAD_XML_DESCRIPTION</description>
+
+  <!-- This is the PHP namespace under which the extension's
+    code is organised. It should follow this format:
+    
+    Vendor\Component\ComponentName
+
+    "Vendor" can be your company or your own name
+    
+    The "ComponentName" section MUST match the name used 
+    everywhere else for your component. Whatever the name of 
+    this XML file is, the namespace must match (ignoring CamelCase). 
+    -->
+  <namespace path="src/">Sined23\Component\Download</namespace>
+
+  <files folder="site">
+    <folder>forms</folder>
+    <folder>language</folder>
+    <!-- <folder>helpers</folder> -->
+    <folder>src</folder>
+    <folder>tmpl</folder>
+  </files>
+
+  <languages>
+    <language tag="en-GB">site/language/en-GB/com_download.ini</language>
+  </languages>
+
+  <administration>
+    <menu link="index.php?option=com_download">COM_DOWNLOAD</menu>
+    <files folder="admin/">
+      <folder>forms</folder>
+      <folder>language</folder>
+      <folder>services</folder>
+      <folder>sql</folder>
+      <folder>src</folder>
+      <folder>tmpl</folder>
+    </files>
+  </administration>
+
+  <languages>
+    <language tag="en-GB">admin/language/en-GB/com_download.ini</language>
+    <language tag="en-GB">admin/language/en-GB/com_download.sys.ini</language>
+  </languages>
+
+  <install>
+    <sql>
+      <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+    </sql>
+  </install>
+
+  <uninstall>
+    <sql>
+      <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+    </sql>
+  </uninstall>
+
+  <update>
+    <schemas>
+      <schemapath type="mysql">sql/updates/mysql</schemapath>
+    </schemas>
+  </update>
+
+</extension>
