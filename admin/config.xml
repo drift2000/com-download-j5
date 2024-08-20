@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<fieldset name="global"
+		label="JGLOBAL_FIELDSET_OPTIONS"
+	>
+		<field name="noreply_email"
+			type="email"
+			label="COM_DOWNLOAD_EMAIL_LABEL"
+			description="COM_DOWNLOAD_EMAIL_LABEL_DESC"
+			required="true"
+			validate="email"
+			default="noreply@local"
+		/>
+		<field name="noreply_name"
+			type="text"
+			label="COM_DOWNLOAD_NAME_LABEL"
+			description="COM_DOWNLOAD_NAME_LABEL_DESC"
+			required="true"
+			default="NoReply"
+		/>
+		<field name="policy_name"
+			type="text"
+			label="COM_DOWNLOAD_POLICY_NAME_LABEL"
+			description="COM_DOWNLOAD_POLICY_NAME_LABEL_DESC"
+			buttons="false"
+			default="I have read and agree with Privacy Policy*"
+		/>
+	</fieldset>
+
+	<fieldset name="access"
+		label="COM_DOWNLOAD_ACCESS"
+	>
+		<field name="recipient_name_access"
+			type="text"
+			label="COM_DOWNLOAD_ACCESS_NAME"
+			description="COM_DOWNLOAD_ACCESS_NAME_DESC"
+			required="true"
+			default="Webmaster"
+		/>
+		<field name="recipient_email_access"
+			type="email"
+			label="COM_DOWNLOAD_ACCESS_EMAIL"
+			description="COM_DOWNLOAD_ACCESS_EMAIL_DESC"
+			required="true"
+			validate="email"
+			default="webmaster@local"
+		/>
+		<field name="recipient_email_access_cc"
+			type="email"
+			label="COM_DOWNLOAD_ACCESS_EMAIL_CC"
+			description="COM_DOWNLOAD_ACCESS_EMAIL_CC_DESC"
+			validate="email"
+		/>
+		<field name="recipient_email_access_bcc"
+			type="email"
+			label="COM_DOWNLOAD_ACCESS_EMAIL_BCC"
+			description="COM_DOWNLOAD_ACCESS_EMAIL_BCC_DESC"
+			validate="email"
+		/>
+		<field name="subject_access_manager"
+			type="text"
+			label="COM_DOWNLOAD_ACCESS_SUBJECT_MANAGER"
+			description="COM_DOWNLOAD_ACCESS_SUBJECT_MANAGER_DESC"
+			required="true"
+			default="Access to download file"
+		/>
+		<!-- <field name="subject_access_user" 
+			type="text"  
+			label="COM_DOWNLOAD_ACCESS_SUBJECT_USER"
+			description="COM_DOWNLOAD_ACCESS_SUBJECT_USER_DESC"
+			required="true"
+			default="Access to download file"
+			/> -->
+		<field name="preheader_access"
+			type="editor"
+			label="COM_DOWNLOAD_ACCESS_PREHEADER"
+			description="COM_DOWNLOAD_ACCESS_PREHEADER_DESC"
+			buttons="false"
+			filter="RAW"
+			default=""
+		/>
+		<field name="thanks_message_access"
+			type="editor"
+			label="COM_DOWNLOAD_ACCESS_MESSAGE"
+			description="COM_DOWNLOAD_ACCESS_MESSAGE_DESC"
+			buttons="false"
+			filter="RAW"
+			default="Lucky"
+		/>
+	</fieldset>
+
+	<fieldset name="file_request"
+		label="COM_DOWNLOAD_FILE_REQUEST"
+	>
+		<field name="recipient_name_file_request"
+			type="text"
+			label="COM_DOWNLOAD_FILE_REQUEST_NAME"
+			description="COM_DOWNLOAD_FILE_REQUEST_NAME_DESC"
+			required="true"
+			default="Webmaster"
+		/>
+		<field name="recipient_email_file_request"
+			type="email"
+			label="COM_DOWNLOAD_FILE_REQUEST_EMAIL"
+			description="COM_DOWNLOAD_FILE_REQUEST_EMAIL_DESC"
+			required="true"
+			validate="email"
+			default="webmaster@local"
+		/>
+		<field name="recipient_email_file_request_cc"
+			type="email"
+			label="COM_DOWNLOAD_FILE_REQUEST_EMAIL_CC"
+			description="COM_DOWNLOAD_FILE_REQUEST_EMAIL_CC_DESC"
+			validate="email"
+		/>
+		<field name="recipient_email_file_request_bcc"
+			type="email"
+			label="COM_DOWNLOAD_FILE_REQUEST_EMAIL_BCC"
+			description="COM_DOWNLOAD_FILE_REQUEST_EMAIL_BCC_DESC"
+			validate="email"
+		/>
+		<!-- <field name="subject_file_request_manager" 
+			type="text"  
+			label="COM_DOWNLOAD_ACCESS_SUBJECT_MANAGER"
+			description="COM_DOWNLOAD_ACCESS_SUBJECT_MANAGER_DESC"
+			required="true"
+			default="Access to download file"
+			/> -->
+		<!-- <field name="subject_access_user" 
+			type="text"  
+			label="COM_DOWNLOAD_ACCESS_SUBJECT_USER"
+			description="COM_DOWNLOAD_ACCESS_SUBJECT_USER_DESC"
+			required="true"
+			default="Access to download file"
+			/> -->
+		<!-- <field name="preheader_access" 
+			type="editor" 
+			label="COM_DOWNLOAD_ACCESS_PREHEADER" 
+			description="COM_DOWNLOAD_ACCESS_PREHEADER_DESC"
+			buttons="false"
+			filter="RAW"
+			default=""
+			/> -->
+		<field name="thanks_message_file_request"
+			type="editor"
+			label="COM_DOWNLOAD_FILE_REQUEST_MESSAGE"
+			description="COM_DOWNLOAD_FILE_REQUEST_MESSAGE_DESC"
+			buttons="false"
+			filter="RAW"
+			default="Lucky"
+		/>
+	</fieldset>
+
+	<fieldset name="download"
+		label="COM_DOWNLOAD_DOWNLOAD"
+	>
+		<field name="recipient_name_download"
+			type="text"
+			label="COM_DOWNLOAD_DOWNLOAD_NAME"
+			description="COM_DOWNLOAD_DOWNLOAD_NAME_DESC"
+			required="true"
+			default="Webmaster"
+		/>
+		<field name="recipient_email_download"
+			type="email"
+			label="COM_DOWNLOAD_DOWNLOAD_EMAIL"
+			description="COM_DOWNLOAD_DOWNLOAD_EMAIL_DESC"
+			required="true"
+			validate="email"
+			default="webmaster@local"
+		/>
+	</fieldset>
+</config>

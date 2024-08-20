@@ -10,22 +10,30 @@
 
 namespace Sined23\Component\Download\Administrator\View\Item;
 
-use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+defined('_JEXEC') or die;
+
 use Joomla\CMS\Factory;
-use Joomla\CMS\Toolbar\Toolbar;
+use Joomla\CMS\MVC\View\GenericDataException;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
-defined('_JEXEC') or die;
 class HtmlView extends BaseHtmlView
 {
-    // protected $form;
-    // protected $item;
+    protected $form;
+    protected $item;
+    protected $state;
 
     public function display($tpl = null)
     {
-        $this->form = $this->get('Form');
         $this->item = $this->get('Item');
-        print_r($this->item);
+        $this->form = $this->get('Form');
+        $this->state = $this->get('State');
+
+        // Check for errors.
+        if (\count($errors = $this->get('Errors'))) {
+            throw new GenericDataException(implode("\n", $errors), 500);
+        }
+
         $this->addToolbar();
 
         parent::display($tpl);
@@ -34,9 +42,11 @@ class HtmlView extends BaseHtmlView
     protected function addToolbar()
     {
         Factory::getApplication()->getInput()->set('hidemainmenu', true);
+
         ToolbarHelper::title('Item: Add');
 
         ToolbarHelper::apply('item.apply');
+        // ToolbarHelper::edit('item.edit');
         ToolbarHelper::save('item.save');
         ToolbarHelper::cancel('item.cancel', 'JTOOLBAR_CLOSE');
     }

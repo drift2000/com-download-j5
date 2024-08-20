@@ -1,80 +1,52 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <form>
-	<fieldset>
-		<field
-			name="fullname"
-			type="text"
-			label="COM_DOWNLOAD_ACCESS_FULLNAME_LABEL"
-			id="access-name"
-			size="30"
-			filter="string"
-			hint="COM_DOWNLOAD_ACCESS_FULLNAME_HINT"
-			required="true"
-		/>
-		<field
-			name="email"
-			type="email"
-			label="COM_DOWNLOAD_ACCESS_EMAIL_LABEL"
-			id="access-email"
-			size="30"
-			filter="string"
-			hint="COM_DOWNLOAD_ACCESS_EMAIL_HINT"
-			validate="ContactEmail"
-			autocomplete="email"
-			required="true"
-		/>
-		<field
-			name="company"
-			type="text"
-			label="COM_DOWNLOAD_ACCESS_COMPANY_LABEL"
-			id="access-emailmsg"
-			size="60"
-			filter="string"
-			hint="COM_DOWNLOAD_ACCESS_COMPANY_HINT"
-			validate="ContactEmailSubject"
-			required="true"
-		/>
-		<field
-			name="message"
-			type="textarea"
-			label="COM_DOWNLOAD_ACCESS_MESSAGE_LABEL"
-			cols="40"
-			rows="5"
-			id="access-message"
-			filter="safehtml"
-			validate="ContactEmailMessage"
-			hint="COM_DOWNLOAD_ACCESS_MESSAGE_HINT"
-			required="false"
-		/>
-		<field name="page_name"
-			type="text"
-			label="page_name:"
-			hint="Page name"
-		/>
-		<field name="page_url"
-			type="text"
-			label="page_url:"
-			hint="Page url"
-		/>
-		<field name="download_file"
-			type="text"
-			label="download_file:"
-			hint="Download file"
-		/>
-		<field name="policy"
-			type="checkbox"
-			label="Terms of Use, Privacy Policy, Cookies Policy"
-			required="true"
-			hint="policy"
-		/>
-	</fieldset>
-	<fieldset name="captcha">
-		<field
-			name="captcha"
-			type="captcha"
-			label="COM_DOWNLOAD_CAPTCHA_LABEL"
-			validate="captcha"
-			namespace="download"
-		/>
-	</fieldset>
+    <fieldset name="general">
+        <field name="message"
+            type="textarea"
+            label="Message:"
+            hint="Additional details"
+        />
+        <field name="fullname"
+            type="text"
+            label="Name:"
+            required="true"
+            hint="Your name*"
+        />
+        <field name="email"
+            type="email"
+            label="E-mail:"
+            required="true"
+            validate="email"
+            hint="E-mail*"
+        />
+        <field name="company"
+            type="text"
+            label="Company:"
+            required="true"
+            hint="Company*"
+        />
+        <field name="page_name"
+            type="text"
+            label="page_name:"
+            hint="Page name"
+        />
+        <field name="page_url"
+            type="text"
+            label="page_url:"
+            hint="Page url"
+        />
+        <field name="download_file"
+            type="text"
+            label="download_file:"
+            hint="Download file"
+        />
+        <field name="policy"
+            type="checkbox"
+            label="Terms of Use, Privacy Policy, Cookies Policy"
+            required="true"
+            hint="policy"
+        />
+
+    </fieldset>
+
 </form>

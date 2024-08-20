@@ -22,10 +22,14 @@ if ($this->item[0] == 'file') {
     readfile( $this->item[1]);
     exit();
 } elseif ($this->item[0] == 'no_file') {
-    header("Location: /index.php?option=com_download&view=file_request");
+    $product = $this->item[2];
+    header("Location: /index.php?option=com_download&view=filerequest&layout=default");
+    // header("Location: /");
+    // print_r($this->item);
     exit();
 } elseif ($this->item[0] == 'access') {
-    header("Location: /index.php?option=com_download&view=access");
+    header("Location: /index.php?option=com_download&view=access&layout=default");
+    // header("Location: /");
     exit();
 } elseif ($this->item[0] == 'guest') {
     header("Location: /index.php?option=com_users&view=login");
@@ -33,22 +37,3 @@ if ($this->item[0] == 'file') {
 } else {
     exit();
 }
-
-
-// $file = $this->item[1];
-// echo $file. "<br/>";
-// if (!file_exists($file)) { // file does not exist
-//     die('file not found');
-// } else {
-//     header("Cache-Control: public");
-//     header("Content-Description: File Transfer");
-//     header("Content-Disposition: attachment; filename=$file");
-//     header("Content-Type: application/zip");
-//     header("Content-Transfer-Encoding: binary");
-
-//     // read the file from disk
-//     readfile($file);
-// }
-
-
-

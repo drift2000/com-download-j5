@@ -18,13 +18,13 @@ defined('_JEXEC') or die;
 class HtmlView extends BaseHtmlView
 {
     protected $item;
-
+    
     public function display($tpl = null)
     {
         $this->item = $this->get('Item');
-        $app = Factory::getApplication();
-        $active = $app->getMenu()->getActive();
-        $this->params = $active->getParams();
+        // $app = Factory::getApplication();
+        // $active = $app->getMenu()->getActive();
+        // $this->params = $active->getParams();
 
         parent::display($tpl);
     }

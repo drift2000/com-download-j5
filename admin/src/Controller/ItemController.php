@@ -11,10 +11,11 @@
 namespace Sined23\Component\Download\Administrator\Controller;
 
 use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Versioning\VersionableControllerTrait;
 
 defined('_JEXEC') or die;
 
 class ItemController extends FormController
 {
-
+    use VersionableControllerTrait;
 }

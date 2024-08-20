@@ -17,11 +17,11 @@ use Joomla\Database\DatabaseInterface;
 
 defined('_JEXEC') or die;
 
-class AccessModel extends AdminModel
+class FileRequestModel extends AdminModel
 {
     public function getForm($data = array(), $loadData = true)
     {
-        $form = $this->loadForm('com_download.access', 'access', array('control' => 'jform', 'load_data' => $loadData));
+        $form = $this->loadForm('com_download.filerequest', 'file_request', array('control' => 'jform', 'load_data' => $loadData));
 
         if (empty($form)) {
             return false;
@@ -29,7 +29,7 @@ class AccessModel extends AdminModel
 
         return $form;
     }
-    public function getTable($name = 'Access', $prefix = 'Administrator', $options = [])
+    public function getTable($name = 'FileRequest', $prefix = 'Administrator', $options = [])
     {
         return parent::getTable($name, $prefix, $options);
     }

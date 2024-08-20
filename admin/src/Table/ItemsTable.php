@@ -10,10 +10,10 @@
 
 namespace Sined23\Component\Download\Administrator\Table;
 
+defined('_JEXEC') or die;
+
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
-
-defined('_JEXEC') or die;
 
 class ItemsTable extends Table
 {

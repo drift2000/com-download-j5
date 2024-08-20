@@ -1,251 +1,83 @@
 CREATE TABLE IF NOT EXISTS `#__download_items` (
-    `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `cid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
-    `url` VARCHAR(255),
-    `category` VARCHAR(255),
-    `class` VARCHAR(255),
-    `group` VARCHAR(255),
-    `product` VARCHAR(255),
-    `type` VARCHAR(255),
-    `usersgroup` VARCHAR(255),
-    `emailsend` VARCHAR(255),
-    `MD5` VARCHAR(255),
-    `published` TINYINT(4) NOT NULL DEFAULT 0,
-    `publish_up` DATETIME,
-    `compounds` VARCHAR(255),
-    `manager` VARCHAR(255),
+    `id` int NOT NULL AUTO_INCREMENT,
+    `cid` int NOT NULL,
+    `url` varchar(255) DEFAULT NULL,
+    `category` varchar(255) DEFAULT NULL,
+    `class` varchar(255) DEFAULT NULL,
+    `group` varchar(255) DEFAULT NULL,
+    `product` varchar(255) DEFAULT NULL,
+    `type` varchar(255) DEFAULT NULL,
+    `access_level` int DEFAULT NULL,
+    `usersgroup` int DEFAULT NULL,
+    `emailsend` varchar(255) DEFAULT NULL,
+    `MD5` varchar(255) DEFAULT NULL,
+    `published` varchar(255) DEFAULT NULL,
+    `publish_up` datetime DEFAULT NULL,
+    `compounds` varchar(255) DEFAULT NULL,
+    `manager` varchar(255) DEFAULT NULL,
+    `user_id` int DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 11 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__download_stat` (
-    `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `cid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
-    `username` VARCHAR(255),
-    `dtime` DATETIME,
-    `category` VARCHAR(255),
-    `class` VARCHAR(255),
-    `group` VARCHAR(255),
-    `product` VARCHAR(255),
-    `type` VARCHAR(255),
-    `ip` VARCHAR(255),
-    `fullname` VARCHAR(255),
-    `action_stat` VARCHAR(255),
-    `email` VARCHAR(255),
+    `id` int NOT NULL AUTO_INCREMENT,
+    `cid` int NOT NULL DEFAULT '0',
+    `username` varchar(255) DEFAULT NULL,
+    `dtime` datetime DEFAULT NULL,
+    `category` varchar(255) DEFAULT NULL,
+    `class` varchar(255) DEFAULT NULL,
+    `group` varchar(255) DEFAULT NULL,
+    `product` varchar(255) DEFAULT NULL,
+    `type` varchar(255) DEFAULT NULL,
+    `ip` varchar(255) DEFAULT NULL,
+    `fullname` varchar(255) DEFAULT NULL,
+    `action_stat` varchar(255) DEFAULT NULL,
+    `email` varchar(255) DEFAULT NULL,
     PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 11 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__cta_access` (
-    `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `asset_id` INT(10) UNSIGNED NOT NULL DEFAULT 0,
-    `created_date` DATETIME,
-    `created_by` INT(11),
-    `fullname` VARCHAR(255),
-    `email` VARCHAR(255),
-    `message` text NOT NULL,
-    `company` text NOT NULL,
-    `download_file` INT(11),
-    `page_name` VARCHAR(255),
-    `page_url` text NOT NULL,
-    `ip` varchar(45) NOT NULL,
-    UNIQUE KEY `id` (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+    `id` int NOT NULL AUTO_INCREMENT,
+    `asset_id` int NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
+    `created_date` datetime DEFAULT NULL,
+    `created_by` int NOT NULL DEFAULT '0',
+    `fullname` varchar(255) DEFAULT NULL,
+    `email` varchar(255) DEFAULT NULL,
+    `message` text DEFAULT NULL COMMENT 'Message or Comment',
+    `company` text DEFAULT NULL,
+    `download_file` int NOT NULL DEFAULT '0',
+    `page_name` varchar(255) DEFAULT NULL,
+    `page_url` text DEFAULT NULL,
+    `ip` varchar(45) DEFAULT NULL COMMENT 'user IP',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB AUTO_INCREMENT = 12 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__cta_file_request` (
-    `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `asset_id` INT(10) UNSIGNED NOT NULL DEFAULT 0,
-    `created_date` DATETIME,
+    `id` int NOT NULL AUTO_INCREMENT,
+    `asset_id` int unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
+    `created_date` datetime DEFAULT NULL,
     `created_by` int DEFAULT NULL,
-    `fullname` VARCHAR(255),
-    `email` VARCHAR(255),
-    `message` text,
+    `fullname` varchar(255) DEFAULT NULL,
+    `email` varchar(255) DEFAULT NULL,
+    `message` text COMMENT 'Message or Comment',
     `company` text,
     `download_file` int DEFAULT NULL,
-    `page_name` VARCHAR(255),
+    `page_name` varchar(255) DEFAULT NULL,
     `page_url` text,
-    `ip` varchar(45) DEFAULT NULL,
-    UNIQUE KEY `id` (`id`) USING BTREE
+    `ip` varchar(45) DEFAULT NULL COMMENT 'user IP',
+    PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 9 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
-INSERT INTO
-    `#__download_items` (
-        `cid`,
-        `url`,
-        `category`,
-        `class`,
-        `group`,
-        `product`,
-        `usersgroup`,
-        `emailsend`,
-        `published`,
-        `publish_up`,
-        `compounds`,
-        `manager`
-    )
-VALUES
-    (
-        1,
-        'test.zip',
-        'test',
-        'test',
-        'test',
-        'test',
-        '2',
-        'email@email.com',
-        '1',
-        NOW(),
-        '100500',
-        'Super User'
-    );
+INSERT INTO `#__download_items` (`cid`, `url`, `category`, `class`, `group`, `product`, `access_level`, `emailsend`, `published`, `compounds`, `manager`) 
+    VALUES ('1', 'test.zip', 'test', 'test', 'test', 'test1', '2', 'email@email.com', '1', '100500', 'Super User');
+INSERT INTO `#__download_items` (`cid`, `url`, `category`, `class`, `group`, `product`, `access_level`, `emailsend`, `published`, `compounds`, `manager`) 
+    VALUES ('3', 'test.zip', 'test', 'test', 'test', 'test3', '11', 'email@email.com', '1', '100500', 'Super User');
+INSERT INTO `#__download_items` (`cid`, `url`, `category`, `class`, `group`, `product`, `access_level`, `emailsend`, `published`, `compounds`, `manager`) 
+    VALUES ('5', '', 'test', 'test', 'test', 'test5', '2', 'email@email.com', '1', '100500', 'Super User');
+INSERT INTO `#__download_items` (`cid`, `url`, `category`, `class`, `group`, `product`, `access_level`, `emailsend`, `published`, `compounds`, `manager`) 
+    VALUES ('7', 'test.zip', 'test', 'test', 'test', 'test7', '2', 'email@email.com', '0', '100500', 'Super User');
+INSERT INTO `#__download_items` (`cid`, `url`, `category`, `class`, `group`, `product`, `access_level`, `emailsend`, `published`, `compounds`, `manager`) 
+    VALUES ('9', 'test1.zip', 'test', 'test', 'test', 'test9', '2', 'email@email.com', '1', '100500', 'Super User');
 
-INSERT INTO
-    `#__download_items` (
-        `cid`,
-        `url`,
-        `category`,
-        `class`,
-        `group`,
-        `product`,
-        `usersgroup`,
-        `emailsend`,
-        `published`,
-        `publish_up`,
-        `compounds`,
-        `manager`
-    )
-VALUES
-    (
-        3,
-        'test.zip',
-        'test',
-        'test',
-        'test',
-        'test',
-        '11',
-        'email@email.com',
-        '1',
-        NOW(),
-        '100500',
-        'Super User'
-    );
-
-INSERT INTO
-    `#__download_items` (
-        `cid`,
-        `url`,
-        `category`,
-        `class`,
-        `group`,
-        `product`,
-        `usersgroup`,
-        `emailsend`,
-        `published`,
-        `publish_up`,
-        `compounds`,
-        `manager`
-    )
-VALUES
-    (
-        5,
-        '',
-        'test',
-        'test',
-        'test',
-        'test',
-        '2',
-        'email@email.com',
-        '1',
-        NOW(),
-        '100500',
-        'Super User'
-    );
-
-INSERT INTO
-    `#__download_items` (
-        `cid`,
-        `url`,
-        `category`,
-        `class`,
-        `group`,
-        `product`,
-        `usersgroup`,
-        `emailsend`,
-        `published`,
-        `publish_up`,
-        `compounds`,
-        `manager`
-    )
-VALUES
-    (
-        7,
-        'test.zip',
-        'test',
-        'test',
-        'test',
-        'test',
-        '2',
-        'email@email.com',
-        '0',
-        NOW(),
-        '100500',
-        'Super User'
-    );
-
-INSERT INTO
-    `#__download_items` (
-        `cid`,
-        `url`,
-        `category`,
-        `class`,
-        `group`,
-        `product`,
-        `usersgroup`,
-        `emailsend`,
-        `published`,
-        `publish_up`,
-        `compounds`,
-        `manager`
-    )
-VALUES
-    (
-        9,
-        'test1.zip',
-        'test',
-        'test',
-        'test',
-        'test',
-        '2',
-        'email@email.com',
-        '1',
-        NOW(),
-        '100500',
-        'Super User'
-    );
-
-INSERT INTO
-    `#__download_stat` (
-        `cid`,
-        `username`,
-        `dtime`,
-        `category`,
-        `class`,
-        `group`,
-        `product`,
-        `ip`,
-        `fullname`,
-        `email`,
-        `action_stat`
-    )
-VALUES
-    (
-        0,
-        'user',
-        NOW(),
-        'test',
-        'test',
-        'test',
-        'test',
-        '0.0.0.0',
-        'F name',
-        'email@email.com',
-        'download'
-    );
+INSERT INTO `#__download_stat` (`cid`, `username`, `dtime`, `category`, `class`, `group`, `product`, `ip`, `fullname`, `email`, `action_stat` )
+    VALUES ( 0, 'user', NOW(), 'test', 'test', 'test', 'test', '0.0.0.0', 'F name', 'email@email.com', 'download' );

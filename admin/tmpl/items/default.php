@@ -20,7 +20,7 @@ defined('_JEXEC') or die;
 <form action="<?php echo Route::_('index.php?option=com_download&view=items'); ?>" method="post" name="adminForm" id="adminForm">
     <?php
     // Search tools bar
-    echo LayoutHelper::render('joomla.searchtools.default', ['view' => $this]);
+    // echo LayoutHelper::render('joomla.searchtools.default', ['view' => $this]);
     ?>
     <?php if (empty($this->items)): ?>
         <div class="alert alert-info">
@@ -35,25 +35,25 @@ defined('_JEXEC') or die;
                         <?php echo HTMLHelper::_('grid.checkall'); ?>
                     </th>
                     <th>
-                        <?php echo HTMLHelper::_('searchtools.sort', 'COM_DOWNLOAD_ITEMS_STATUS', 'a.published', $this->listDirn, $this->listOrder); ?>
+                        <?php echo Text::_('COM_DOWNLOAD_FILES_STATUS'); ?>
                     </th>
                     <th>
-                        <?php echo Text::_('COM_DOWNLOAD_ITEMS_ITEM_PRODUCT'); ?>
+                        <?php echo Text::_('COM_DOWNLOAD_FILES_ITEM_PRODUCT'); ?>
                     </th>
                     <th>
-                        <?php echo Text::_('COM_DOWNLOAD_ITEMS_NUM_COMPNDS'); ?>
+                        <?php echo Text::_('COM_DOWNLOAD_FILES_NUM_COMPNDS'); ?>
                     </th>
                     <th>
-                        <?php echo Text::_('COM_DOWNLOAD_ITEMS_PUBLISH_UP_LABEL'); ?>
+                        <?php echo Text::_('COM_DOWNLOAD_FILES_PUBLISH_UP_LABEL'); ?>
                     </th>
                     <th>
-                        <?php echo Text::_('COM_DOWNLOAD_ITEMS_ITEM_USERSGROUP'); ?>
+                        <?php echo Text::_('COM_DOWNLOAD_FILES_ITEM_USERSGROUP'); ?>
                     </th>
                     <th>
-                        <?php echo Text::_('COM_DOWNLOAD_ITEMS_MANAGER'); ?>
+                        <?php echo Text::_('COM_DOWNLOAD_FILES_MANAGER'); ?>
                     </th>
                     <th width="5%">
-                        <?php echo Text::_('COM_DOWNLOAD_ITEMS_ITEM_CID'); ?>
+                        <?php echo Text::_('COM_DOWNLOAD_FILES_ITEM_CID'); ?>
                     </th>
                 </tr>
             </thead>
@@ -64,7 +64,7 @@ defined('_JEXEC') or die;
                             <?php echo HTMLHelper::_('grid.id', $i, $row->id); ?>
                         </td>
                         <td align="center">
-                            <?php echo HTMLHelper::_('jgrid.published', $row->published, $i, 'download.', true); ?>
+                            <?php echo HTMLHelper::_('jgrid.published', $row->published, $i, 'items.', true); ?>
                         </td>
                         <td>
                             <a href="<?php echo Route::_('index.php?option=com_download&task=item.edit&id=' . $row->id); ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape($row->product); ?>">
@@ -84,10 +84,10 @@ defined('_JEXEC') or die;
                             <?php echo $row->publish_up ?>
                         </td>
                         <td>
-                            <?php echo $row->usersgroup ?>
+                            <?php echo $this->escape($row->access_level); ?>
                         </td>
                         <td>
-                            <?php echo $row->manager ?>
+                            <?php echo $row->user_id ?>
                         </td>
                         <td align="center">
                             <?php echo ($row->cid) ?>
