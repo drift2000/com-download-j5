@@ -28,10 +28,10 @@ class HtmlView extends BaseHtmlView
         $this->state = $this->get('State');
 
         // Check for errors.
-        $errors = $this->get('Errors');
-        if (isset($errors) && count($errors)) {
-            throw new GenericDataException(implode("\n", $errors), 500);
-        }
+        // $errors = $this->get('Errors');
+        // if (isset($errors) && count($errors)) {
+        //     throw new GenericDataException(implode("\n", $errors), 500);
+        // }
 
         parent::display($tpl);
     }

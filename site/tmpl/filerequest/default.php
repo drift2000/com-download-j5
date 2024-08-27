@@ -32,13 +32,15 @@ if ($filename == '') {
 
 <div class="container">
     <!-- <pre><?php print_r($this->item); ?></pre> -->
-    <h1>No file or file not published</h1>
+    <h1>No file or file unpublished</h1>
     <p>You try to download <b><?php echo $product; ?></b>, but the file is not available now.<br /> Fill in the form below to send the file request.</p>
     <form id="request" action="<?php echo Route::_('index.php'); ?>" method="post" class="form-validate form-horizontal well">
         <div class="row">
             <div class="col">
                 <?php echo $this->form->getInput('fullname'); ?>
-                <?php echo $this->form->getInput('email', '', JFactory::getUser()->email); ?>
+                <?php 
+                $this->form->setFieldAttribute('email', 'readonly', 'true', $group = null);
+                echo $this->form->getInput('email', '', Factory::getApplication()->getIdentity()->email); ?>
                 <?php echo $this->form->getInput('company'); ?>
             </div>
             <div class="col">

@@ -13,6 +13,8 @@ namespace Sined23\Component\Download\Site\Controller;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die;
 
@@ -46,30 +48,30 @@ class FileRequestController extends FormController
             // Redirect back to the edit screen
             $this->setMessage(Text::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $model->getError()), 'error');
 
-            // $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=filerequest&layout=default' . $this->getRedirectToItemAppend($recordId, $urlVar), false));
+            $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=filerequest&layout=default' . $this->getRedirectToItemAppend($recordId, $urlVar), false));
 
             return false;
         }
 
-        $this->setMessage('Form successfully saved.');
+        $this->setMessage('Form successfully send.');
 
-        echo '<pre>';
-        print_r($data);
-        echo '</pre>';
-        // $this->sendEmail($data);
-        // $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=access&layout=true', false));
+        // echo '<pre>';
+        // print_r($data);
+        // echo '</pre>';
+        $this->sendDataEmail($data);
+        $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=filerequest&layout=send', false));
 
         return true;
     }
 
-    public function sendEmail($data)
+    public function sendDataEmail($data)
     {
         $body_manager = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                         <html xmlns="http://www.w3.org/1999/xhtml">
                         
                         <head>
                             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-                            <title>New database access request</title>
+                            <title>User tried to downlaod file</title>
                             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                         </head>
                         
@@ -109,18 +111,28 @@ class FileRequestController extends FormController
                         </body>
                         
                         </html>';
-        $params = JComponentHelper::getParams('com_download');
+        $params = ComponentHelper::getParams('com_download');
 
-        $mailer_m = JFactory::getMailer();
+        $mailer_m = Factory::getMailer();
         $mailer_m->IsHTML(true);
         $mailer_m->setSender($params->get('noreply_email'), $params->get('noreply_name'));
-        $mailer_m->addRecipient($params->get('recipient_email_access'), $params->get('recipient_name_access'));
-        if (!empty($params->get('recipient_email_access_bcc'))) {
-            $mailer_m->addBcc($params->get('recipient_email_access_bcc'));
+        $mailer_m->addRecipient($params->get('recipient_email_file_request'), $params->get('recipient_name_file_request'));
+        if (!empty($params->get('recipient_email_file_request_bcc'))) {
+            $mailer_m->addBcc($params->get('recipient_email_file_request_bcc'));
         }
         ;
-        $mailer_m->addReplyTo($data['email'], $data['fullname']);
-        $mailer_m->setSubject("[" . $_SERVER['HTTP_HOST'] . "] " . $params->get('subject_access_manager'));
+        if ($_SESSION['product-info']->action_stat == 'unknown id') {
+            $messageSubject = "User used unknown id";
+        }
+        ;
+        if ($_SESSION['product-info']->action_stat == 'no file') {
+            $messageSubject = "No file on the server";
+        }
+        if ($_SESSION['product-info']->action_stat == 'unpublished') {
+            $messageSubject = "Trying to download unpublished file";
+        }
+        ;
+        $mailer_m->setSubject("[" . $_SERVER['HTTP_HOST'] . "] " . $messageSubject);
         $mailer_m->setBody($body_manager);
         $mailer_m->send();
 

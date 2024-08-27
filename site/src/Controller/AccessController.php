@@ -59,7 +59,7 @@ class AccessController extends FormController
         // print_r($data);
         // echo '</pre>';
         $this->sendDataEmail($data);
-        $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=access&layout=true', false));
+        $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=access&layout=send', false));
 
         return true;
     }

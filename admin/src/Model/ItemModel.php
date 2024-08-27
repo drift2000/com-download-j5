@@ -20,7 +20,7 @@ class ItemModel extends AdminModel
 
     public function getForm($data = array(), $loadData = true)
     {
-        $form = $this->loadForm('com_download.file', 'file', array('control' => 'jform', 'load_data' => $loadData));
+        $form = $this->loadForm('com_download.item', 'item', array('control' => 'jform', 'load_data' => $loadData));
 
         if (empty($form)) {
             return false;

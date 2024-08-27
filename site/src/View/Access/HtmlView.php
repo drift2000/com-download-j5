@@ -24,15 +24,15 @@ class HtmlView extends BaseHtmlView
 
     public function display($tpl = null)
     {
-        ToolBarHelper::preferences('com_download');
+        // ToolBarHelper::preferences('com_download');
         $this->item = $this->get('Item');
         $this->form = $this->get('Form');
         $this->state = $this->get('State');
         
         // Check for errors.
-        if (\count($errors = $this->get('Errors'))) {
-            throw new GenericDataException(implode("\n", $errors), 500);
-        }
+        // if (\count($errors = $this->get('Errors'))) {
+        //     throw new GenericDataException(implode("\n", $errors), 500);
+        // }
 
         parent::display($tpl);
     }
