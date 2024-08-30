@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <fields name="filter">
+
+        <field
+            name="search"
+            type="text"
+            inputmode="search"
+            label="COM_PLANETS_FILTER_SEARCH_LABEL"
+            hint="JSEARCH_FILTER" />
+
+        <field
+            name="published"
+            type="status"
+            label="JOPTION_SELECT_PUBLISHED"
+            class="js-select-submit-on-change"
+            extension="com_download">
+            <option value="">JOPTION_SELECT_PUBLISHED</option>
+        </field>
+
+        <field
+			name="access_level"
+			type="accesslevel"
+			label="JGRID_HEADING_ACCESS"
+			multiple="true"
+			layout="joomla.form.field.list-fancy-select"
+			hint="JOPTION_SELECT_ACCESS"
+			class="js-select-submit-on-change"
+		/>
+
+    </fields>
+
+    <fields name="list">
+
+        <field
+            name="limit"
+            type="limitbox"
+            label="JGLOBAL_LIST_LIMIT"
+            onchange="this.form.submit();" />
+
+    </fields>
+</form>

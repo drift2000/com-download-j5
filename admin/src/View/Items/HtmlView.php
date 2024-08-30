@@ -24,8 +24,8 @@ class HtmlView extends BaseHtmlView
         $this->state = $this->get('State');
         $this->addToolbar();
         $this->pagination = $this->get('Pagination');
-        // $this->filterForm = $this->get('FilterForm');
-        // $this->activeFilters = $this->get('ActiveFilters');
+        $this->filterForm = $this->get('FilterForm');
+        $this->activeFilters = $this->get('ActiveFilters');
 
         // $this->listOrder = $this->escape($this->state->get('list.ordering'));
         // $this->listDirn = $this->escape($this->state->get('list.direction'));

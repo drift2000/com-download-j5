@@ -20,7 +20,7 @@ defined('_JEXEC') or die;
 <form action="<?php echo Route::_('index.php?option=com_download&view=items'); ?>" method="post" name="adminForm" id="adminForm">
     <?php
     // Search tools bar
-    // echo LayoutHelper::render('joomla.searchtools.default', ['view' => $this]);
+    echo LayoutHelper::render('joomla.searchtools.default', ['view' => $this]);
     ?>
     <?php if (empty($this->items)): ?>
         <div class="alert alert-info">

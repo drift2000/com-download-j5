@@ -12,14 +12,15 @@ defined('_JEXEC') or exit();
 
 if ($this->item[0] == 'file') {
 
-    header("Cache-Control: public");
-    header("Content-Description: File Transfer");
-    header("Content-Disposition: attachment; filename=" . $this->item[1]);
-    header("Content-Type: application/zip");
-    header("Content-Transfer-Encoding: binary");
+    // header("Cache-Control: public");
+    // header("Content-Description: File Transfer");
+    // header("Content-Disposition: attachment; filename=" . $this->item[1]);
+    // header("Content-Type: application/zip");
+    // header("Content-Transfer-Encoding: binary");
 
     // read the file from disk
-    readfile( $this->item[1]);
+    // readfile( $this->item[1]);
+    header("Location: /download/" . $this->item[ 1 ]);
     exit();
 } elseif ($this->item[0] == 'no_file') {
     $product = $this->item[2];
