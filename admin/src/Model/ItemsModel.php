@@ -38,7 +38,7 @@ class ItemsModel extends ListModel
 
         // Order by
         // $query->order('a.cid DESC');
-        $query->order('a.id ASC');
+        $query->order('a.cid ASC');
 
         // Filter: like / search
         $search = $this->getState('filter.search');

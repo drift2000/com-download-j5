@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 
 class ItemsController extends AdminController
 {
-    public function getModel($name = 'Item', $prefix = 'Administrator', $config = array('ignore_request' => true))
+    public function getModel($name = 'Items', $prefix = 'Administrator', $config = array('ignore_request' => true))
     {
         return parent::getModel($name, $prefix, $config);
     }

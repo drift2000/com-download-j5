@@ -44,10 +44,10 @@ CREATE TABLE IF NOT EXISTS `#__cta_access` (
     `fullname` varchar(255) DEFAULT NULL,
     `email` varchar(255) DEFAULT NULL,
     `message` text DEFAULT NULL COMMENT 'Message or Comment',
-    `company` varchar(255) DEFAULT NULL,
+    `company` text DEFAULT NULL,
     `download_file` int NOT NULL DEFAULT '0',
     `page_name` varchar(255) DEFAULT NULL,
-    `page_url` varchar(255) DEFAULT NULL,
+    `page_url` text DEFAULT NULL,
     `ip` varchar(45) DEFAULT NULL COMMENT 'user IP',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 12 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
@@ -60,10 +60,10 @@ CREATE TABLE IF NOT EXISTS `#__cta_file_request` (
     `fullname` varchar(255) DEFAULT NULL,
     `email` varchar(255) DEFAULT NULL,
     `message` text COMMENT 'Message or Comment',
-    `company` varchar(255) DEFAULT NULL,
+    `company` text,
     `download_file` int DEFAULT NULL,
     `page_name` varchar(255) DEFAULT NULL,
-    `page_url` varchar(255) DEFAULT NULL,
+    `page_url` text,
     `ip` varchar(45) DEFAULT NULL COMMENT 'user IP',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 9 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;

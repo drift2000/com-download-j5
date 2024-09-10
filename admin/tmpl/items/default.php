@@ -31,28 +31,28 @@ defined('_JEXEC') or die;
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th width="1%">
+                    <th class="w-1 text-center">
                         <?php echo HTMLHelper::_('grid.checkall'); ?>
                     </th>
-                    <th>
+                    <th scope="col" class="w-1 text-center">
                         <?php echo Text::_('COM_DOWNLOAD_FILES_STATUS'); ?>
                     </th>
-                    <th>
+                    <th scope="col" class="d-none d-md-table-cell">
                         <?php echo Text::_('COM_DOWNLOAD_FILES_ITEM_PRODUCT'); ?>
                     </th>
-                    <th>
+                    <th scope="col" class="d-none d-md-table-cell">
                         <?php echo Text::_('COM_DOWNLOAD_FILES_NUM_COMPNDS'); ?>
                     </th>
-                    <th>
+                    <th scope="col" class="d-none d-md-table-cell">
                         <?php echo Text::_('COM_DOWNLOAD_FILES_PUBLISH_UP_LABEL'); ?>
                     </th>
-                    <th>
+                    <th scope="col" class="w-10 d-none d-md-table-cell">
                         <?php echo Text::_('COM_DOWNLOAD_FILES_ITEM_USERSGROUP'); ?>
                     </th>
-                    <th>
+                    <th scope="col" class="w-10 d-none d-md-table-cell">
                         <?php echo Text::_('COM_DOWNLOAD_FILES_MANAGER'); ?>
                     </th>
-                    <th width="5%">
+                    <th scope="col" class="w-3 d-none d-lg-table-cell">
                         <?php echo Text::_('COM_DOWNLOAD_FILES_ITEM_CID'); ?>
                     </th>
                 </tr>
@@ -63,7 +63,7 @@ defined('_JEXEC') or die;
                         <td>
                             <?php echo HTMLHelper::_('grid.id', $i, $row->id); ?>
                         </td>
-                        <td align="center">
+                        <td class="text-center">
                             <?php echo HTMLHelper::_('jgrid.published', $row->published, $i, 'items.', true); ?>
                         </td>
                         <td>
@@ -80,16 +80,25 @@ defined('_JEXEC') or die;
                         <td>
                             <?php echo $row->compounds ?>
                         </td>
-                        <td>
-                            <?php echo $row->publish_up ?>
+                        <td class="small d-none d-md-table-cell">
+                            <?php
+                            $date = $row->publish_up;
+                            echo $date > 0 ? HTMLHelper::_('date', $date, Text::_('DATE_FORMAT_LC4')) : '-';
+                            ?>
                         </td>
-                        <td>
+                        <td class="small d-none d-md-table-cell">
                             <?php echo $this->escape($row->access_level); ?>
                         </td>
-                        <td>
-                            <?php echo $row->user_id ?>
+                        <td class="small d-none d-md-table-cell">
+                            <?php if ((int) $row->user_id != 0): ?>
+                                <a href="<?php echo Route::_('index.php?option=com_users&task=user.edit&id=' . (int) $row->user_id); ?>">
+                                    <?php echo $this->escape($row->user_id); ?>
+                                </a>
+                            <?php else: ?>
+                                <?php echo Text::_('JNONE'); ?>
+                            <?php endif; ?>
                         </td>
-                        <td align="center">
+                        <td class="text-center">
                             <?php echo ($row->cid) ?>
                         </td>
                     </tr>
