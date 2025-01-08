@@ -15,6 +15,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Mailer\MailerFactoryInterface;
 
 defined('_JEXEC') or die;
 
@@ -66,6 +67,8 @@ class AccessController extends FormController
 
     public function sendDataEmail($data)
     {
+        $params = ComponentHelper::getParams('com_download');
+
         $body_manager = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                             <html xmlns="http://www.w3.org/1999/xhtml">
                             
@@ -112,16 +115,15 @@ class AccessController extends FormController
                             
                             </html>';
 
-        $params = ComponentHelper::getParams('com_download');
-
-        $mailer_m = Factory::getMailer();
+        // $mailer_m = Factory::getMailer();
+        $mailer_m = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
+        $mailer_m = new MailerFactoryInterface();
         $mailer_m->IsHTML(true);
         $mailer_m->setSender($params->get('noreply_email'), $params->get('noreply_name'));
         $mailer_m->addRecipient($params->get('recipient_email_access'), $params->get('recipient_name_access'));
         if (!empty($params->get('recipient_email_access_bcc'))) {
             $mailer_m->addBcc($params->get('recipient_email_access_bcc'));
         }
-        ;
         $mailer_m->addReplyTo($data['email'], $data['fullname']);
         $mailer_m->setSubject("[" . $_SERVER['HTTP_HOST'] . "] " . $params->get('subject_access_manager'));
         $mailer_m->setBody($body_manager);

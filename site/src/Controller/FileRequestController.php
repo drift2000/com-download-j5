@@ -66,6 +66,8 @@ class FileRequestController extends FormController
 
     public function sendDataEmail($data)
     {
+        $params = ComponentHelper::getParams('com_download');
+        
         $body_manager = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                         <html xmlns="http://www.w3.org/1999/xhtml">
                         
@@ -111,7 +113,7 @@ class FileRequestController extends FormController
                         </body>
                         
                         </html>';
-        $params = ComponentHelper::getParams('com_download');
+
 
         $mailer_m = Factory::getMailer();
         $mailer_m->IsHTML(true);

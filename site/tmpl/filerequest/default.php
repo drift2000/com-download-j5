@@ -20,25 +20,17 @@ $wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')
     ->useScript('form.validate');
 
-$filename = (empty($_SESSION['product-info'])) ? ('') : ($_SESSION['product-info']);
-if ($filename == '') {
-    $product = 'file';
-    $cid = '-1';
-} else {
-    $product = $filename->product;
-    $cid = $filename->cid;
-}
+$data = $_SESSION['data'] ?? null;
 ?>
 
 <div class="container">
-    <!-- <pre><?php print_r($this->item); ?></pre> -->
-    <h1>No file or file unpublished</h1>
-    <p>You try to download <b><?php echo $product; ?></b>, but the file is not available now.<br /> Fill in the form below to send the file request.</p>
+    <h1><?php echo Text::_('COM_DOWNLOAD_REQUEST_PAGE_TITLE'); ?></h1>
+    <p><?php echo Text::_('COM_DOWNLOAD_REQUEST_PAGE_TEXT'); ?></p>
     <form id="request" action="<?php echo Route::_('index.php'); ?>" method="post" class="form-validate form-horizontal well">
         <div class="row">
             <div class="col">
                 <?php echo $this->form->getInput('fullname'); ?>
-                <?php 
+                <?php
                 $this->form->setFieldAttribute('email', 'readonly', 'true', $group = null);
                 echo $this->form->getInput('email', '', Factory::getApplication()->getIdentity()->email); ?>
                 <?php echo $this->form->getInput('company'); ?>
@@ -59,12 +51,11 @@ if ($filename == '') {
                     <?php echo Text::_('COM_DOWNLOAD_FILE_BTN_SEND'); ?>
                 </button>
 
-                <input type="hidden" name="jform[download_file]" value="<?php echo $cid ?>" />
-                <input type="hidden" name="return" value="<?php echo $this->return_page; ?>">
-                <input type="hidden" name="id" value="<?php // echo $this->item->slug; ?>">
+                <input type="hidden" name="jform[download_file]" value="<?php echo $data->cid ?? '-1'; ?>" />
                 <input type="hidden" name="jform[ip]" value="<?php echo Factory::getApplication()->input->server->get('REMOTE_ADDR'); ?>" />
-                <input type="hidden" name="jform[page_url]" value="<?php // echo Factory::getURI()->toString(); ?>" />
+                <input type="hidden" name="jform[page_url]" value="<?php echo $data->remote_url; ?>" />
                 <input type="hidden" name="jform[page_name]" value="<?php // echo Factory::getDocument()->getTitle(); ?>" />
+                <input type="hidden" name="return" value="<?php echo $data->remote_url; ?>">
                 <input type="hidden" name="option" value="com_download">
                 <input type="hidden" name="task" value="filerequest.save">
 

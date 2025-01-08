@@ -14,6 +14,7 @@ use Joomla\CMS\MVC\Model\ItemModel;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Joomla\Database\DatabaseInterface;
+use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
 
@@ -21,13 +22,41 @@ class FileModel extends ItemModel
 {
     public function getItem($pk = null)
     {
+        /**
+         * @var action_id
+         * 
+         * 0 - guest
+         * 1 - download
+         * 2 - no file
+         * 3 - unpublished
+         * 4 - try to download
+         * 5 - unknown id
+         * 6
+         */
+        
+        $app = Factory::getApplication();
+        
+        $archiveData = new Registry();
+        $archiveData->dtime = date("Y-m-d H:i:s");
+
+        $archiveData->username = $app->getIdentity()->username;
+        $archiveData->usergroup = $app->getIdentity()->groups;
+        $archiveData->fullname = $app->getIdentity()->name;
+        $archiveData->email = $app->getIdentity()->email;
+
+        $archiveData->ip = $app->input->server->get('REMOTE_ADDR');
+        $archiveData->remote_url = $app->input->server->get('HTTP_REFERER','','RAW');
+        // $archiveData->remove_url = $app->input->server->get('HTTP_REFERER','null','base64');
+
         /** checking guest/user */
-        if (Factory::getApplication()->getIdentity()->guest == '1') {
-            return array('guest');
+        if ($app->getIdentity()->guest == '1') {
+            $archiveData->action_stat = 'guest';
+            $archiveData->action_id = '0';
+            return $archiveData;
         }
 
         if ($pk == null) {
-            $input = Factory::getApplication()->input;
+            $input = $app->input;
             $pk = $input->get('f', 0, 'int');
         }
         /** select data by id */
@@ -42,84 +71,52 @@ class FileModel extends ItemModel
 
         $row = $db->loadObject();
 
-        /** collect data for stat */
-        // $archiveData = array(
-        //     'cid' => $pk,
-        //     'username' => Factory::getApplication()->getIdentity()->username,
-        //     'dtime' => date("Y-m-d H:i:s"),
-        //     'category' => (if ($row->category == null) :),
-        //     'class' => $row->class,
-        //     'group' => $row->group,
-        //     'product' => $row->product,
-        //     'type' => $row->type,
-        //     'fullname' => Factory::getApplication()->getIdentity()->name,
-        //     'email' => Factory::getApplication()->getIdentity()->email,
-        //     'ip' => Factory::getApplication()->input->server->get('REMOTE_ADDR'),
-        // );
-        $archiveData = new Registry();
         $archiveData->cid = $pk;
-        $archiveData->username = Factory::getApplication()->getIdentity()->username;
-        $archiveData->dtime = date("Y-m-d H:i:s");
-        $archiveData->category = $row->category;
-        $archiveData->class = $row->class;
-        $archiveData->group = $row->group;
-        $archiveData->product = $row->product;
-        $archiveData->type = $row->type;
-        $archiveData->fullname = Factory::getApplication()->getIdentity()->name;
-        $archiveData->email = Factory::getApplication()->getIdentity()->email;
-        $archiveData->ip = Factory::getApplication()->input->server->get('REMOTE_ADDR');
-
-        $_SESSION['product-info'] = $archiveData;
-        // $_SESSION['page-url'] = JFactory::getURI()->toString();
-        $_SESSION['page-name'] = Factory::getApplication()->getDocument()->getTitle();
-
-        /**checking id */
+        $archiveData->category = $row->category ?? 'unknown';
+        $archiveData->class = $row->class ?? 'unknown';
+        $archiveData->group = $row->group ?? 'unknown';
+        $archiveData->product = $row->product ?? 'unknown';
+        $archiveData->type = $row->type ?? 'unknown';
+        $archiveData->filename = $row->url ?? 'unknown';
+        
+        /** check file id */
         if (empty($row)) {
             $archiveData->action_stat = 'unknown id';
-            $archiveData->action_id = '0';
+            $archiveData->action_id = '5';
             $this->save($archiveData);
-            return array('no_file', $row->emailsend, $row->product);
+            // return array('no_file', $row->emailsend, $row->product);
+            return $archiveData;
         }
-
-        /**checking the rights */
-        if (
-            array_key_exists($row->access_level, Factory::getApplication()->getIdentity()->groups) ||
-            array_key_exists(6, Factory::getApplication()->getIdentity()->groups) ||
-            array_key_exists(7, Factory::getApplication()->getIdentity()->groups) ||
-            array_key_exists(8, Factory::getApplication()->getIdentity()->groups)
-        ) {
-            if ($row->published == '1' && $row->url !== '') {
-                $archiveData->action_stat = 'download';
-                $archiveData->action_id = '1';
-                // if ($archiveData->category == 'Compound Libraries') {
-                //     $this->sendEmailUser($archiveData);
-                // }
-                $this->save($archiveData);
-                return array('file', $row->url);
-            }
-            ;
-            if ($row->published == '1' && $row->url == '') {
-                $archiveData->action_stat = 'no file';
-                $archiveData->action_id = '2';
-                $this->save($archiveData);
-                return array('no_file', $row->emailsend, $row->product);
-            }
-            ;
-            if ($row->published == '0') {
-                $archiveData->action_stat = 'unpublished';
-                $archiveData->action_id = '3';
-                $this->save($archiveData);
-                return array('no_file', $row->emailsend, $row->product);
-            }
-            ;
-        } else {
+        /** check if it is published */
+        if ($row->published == '0') {
+            $archiveData->action_stat = 'unpublished';
+            $archiveData->action_id = '3';
+            $this->save($archiveData);
+            // return array('no_file', $row->emailsend, $row->product);
+            return $archiveData;
+        }
+        /** check the file for existence  */
+        if ($row->url == '') {
+            $archiveData->action_stat = 'no file';
+            $archiveData->action_id = '2';
+            $this->save($archiveData);
+            // return array('no_file', $row->emailsend, $row->product);
+            return $archiveData;
+        }
+        /** checking the rights */
+        if (!array_key_exists($row->access_level, $app->getIdentity()->groups)) {
             $archiveData->action_stat = 'try to download';
             $archiveData->action_id = '4';
             $this->save($archiveData);
-            return array('access', 'error usersgroup');
+            // return array('access', 'error usersgroup');
+            return $archiveData;
         }
 
-        return $row;
+        $archiveData->action_stat = 'download';
+        $archiveData->action_id = '1';
+        $this->save($archiveData);
+        // return array('file', $row->url);
+        return $archiveData;
     }
     public function save($archiveData)
     {

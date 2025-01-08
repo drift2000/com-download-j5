@@ -14,18 +14,18 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Uri\Uri;
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')
     ->useScript('form.validate');
+
+$data = $_SESSION['data'] ?? null; 
 ?>
 
 <div class="container">
-    <p><?php echo Text::_('COM_DOWNLOAD_ACCESS_PAGE_TITLE'); ?></p>
+    <h1><?php echo Text::_('COM_DOWNLOAD_ACCESS_PAGE_TITLE'); ?></h1>
     <p><?php echo Text::_('COM_DOWNLOAD_ACCESS_PAGE_TEXT'); ?></p>
-    <!-- <form action="<?php echo Route::_('index.php?option=com_download&id=' . (int) $this->item->id); ?>" method="post" class="form-validate form-horizontal well"> -->
     <form id="access" action="<?php echo Route::_('index.php'); ?>" method="post" class="form-validate form-horizontal well">
         <div class="row">
             <div class="col">
@@ -52,8 +52,8 @@ $wa->useScript('keepalive')
                     <?php echo Text::_('COM_DOWNLOAD_FILE_BTN_SEND'); ?>
                 </button>
 
-                <input type="hidden" name="jform[download_file]" value="<?php echo $_SESSION['product-info']->cid; ?>" />
-                <input type="hidden" name="jform[page_url]" value="<?php echo Uri::getInstance()->toString(); ?>" />
+                <input type="hidden" name="jform[download_file]" value="<?php echo $data->cid ?? '-1'; ?>" />
+                <input type="hidden" name="jform[page_url]" value="<?php echo $data->remote_url; ?>" />
                 <input type="hidden" name="jform[page_name]" value="<?php echo Factory::getApplication()->getDocument()->getTitle(); ?>" />
                 <input type="hidden" name="jform[ip]" value="<?php echo Factory::getApplication()->input->server->get('REMOTE_ADDR'); ?>" />
                 <input type="hidden" name="option" value="com_download">

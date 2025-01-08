@@ -9,32 +9,53 @@
  */
 
 defined('_JEXEC') or exit();
+/**
+ * @var action_id
+ * 
+ * 0 - guest
+ * 1 - download
+ * 2 - no file
+ * 3 - unpublished
+ * 4 - try to download
+ * 5 - unknown id
+ * 6
+ */
 
-if ($this->item[0] == 'file') {
+$data = $this->item;
+$download_file_url = "download/" . $data->filename;
 
-    // header("Cache-Control: public");
-    // header("Content-Description: File Transfer");
-    // header("Content-Disposition: attachment; filename=" . $this->item[1]);
-    // header("Content-Type: application/zip");
-    // header("Content-Transfer-Encoding: binary");
+echo "<pre>";
+// print_r($data);
+print_r($data->remote_url);
+echo "<br>";
+print_r(base64_encode($data->remote_url));
+// print_r($data->usergroup);
+echo "</pre>";
 
-    // read the file from disk
-    // readfile( $this->item[1]);
-    header("Location: /download/" . $this->item[ 1 ]);
-    exit();
-} elseif ($this->item[0] == 'no_file') {
-    $product = $this->item[2];
-    header("Location: /index.php?option=com_download&view=filerequest&layout=default");
-    // header("Location: /");
-    // print_r($this->item);
-    exit();
-} elseif ($this->item[0] == 'access') {
-    header("Location: /index.php?option=com_download&view=access&layout=default");
-    // header("Location: /");
-    exit();
-} elseif ($this->item[0] == 'guest') {
-    header("Location: /index.php?option=com_users&view=login");
-    exit();
-} else {
+if ($data->action_id == 0) {
+    header("Location: /index.php?option=com_users&view=login&return=" . base64_encode($data->remote_url));
     exit();
 }
+if ($data->action_id == 1) {
+    header("Cache-Control: public");
+    header("Content-Description: File Transfer");
+    header("Content-Disposition: attachment; filename=" . $download_file_url);
+    header("Content-Type: application/zip");
+    header("Content-Transfer-Encoding: binary");
+
+    // read the file from disk
+    readfile(filename: $download_file_url);
+    // header("Location: /download/" . $data->filename);
+    exit();
+}
+if ($data->action_id == 2 || $data->action_id == 3) {
+    $_SESSION['data'] = $data;
+    header("Location: /index.php?option=com_download&view=filerequest&layout=default");
+    exit();
+}
+if ($data->action_id == 4) {
+    $_SESSION['data'] = $data;
+    header("Location: /index.php?option=com_download&view=access&layout=default");
+    exit();
+}
+exit();
