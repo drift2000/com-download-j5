@@ -31,8 +31,8 @@ $data = $_SESSION['data'] ?? null;
             <div class="col">
                 <?php echo $this->form->getInput('fullname'); ?>
                 <?php
-                $this->form->setFieldAttribute('email', 'readonly', 'true', $group = null);
-                echo $this->form->getInput('email', '', Factory::getApplication()->getIdentity()->email); ?>
+                    $this->form->setFieldAttribute('email', 'readonly', 'true', $group = null);
+                    echo $this->form->getInput('email', '', Factory::getApplication()->getIdentity()->email); ?>
                 <?php echo $this->form->getInput('company'); ?>
             </div>
             <div class="col">
@@ -41,8 +41,8 @@ $data = $_SESSION['data'] ?? null;
         </div>
         <div>
             <?php
-            echo $this->form->getInput('policy');
-            echo $this->form->getLabel('policy');
+                echo $this->form->getInput('policy');
+                echo $this->form->getLabel('policy');
             ?>
         </div>
         <div class="control-group">
@@ -50,15 +50,10 @@ $data = $_SESSION['data'] ?? null;
                 <button type="submit" class="btn btn-primary validate">
                     <?php echo Text::_('COM_DOWNLOAD_FILE_BTN_SEND'); ?>
                 </button>
-
-                <input type="hidden" name="jform[download_file]" value="<?php echo $data->cid ?? '-1'; ?>" />
-                <input type="hidden" name="jform[ip]" value="<?php echo Factory::getApplication()->input->server->get('REMOTE_ADDR'); ?>" />
-                <input type="hidden" name="jform[page_url]" value="<?php echo $data->remote_url; ?>" />
-                <input type="hidden" name="jform[page_name]" value="<?php // echo Factory::getDocument()->getTitle(); ?>" />
-                <input type="hidden" name="return" value="<?php echo $data->remote_url; ?>">
+                    
+                <?php $_SESSION['send'] = $data; ?>
                 <input type="hidden" name="option" value="com_download">
                 <input type="hidden" name="task" value="filerequest.save">
-
                 <?php echo HTMLHelper::_('form.token'); ?>
             </div>
         </div>

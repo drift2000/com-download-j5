@@ -55,11 +55,8 @@ class FileRequestController extends FormController
 
         $this->setMessage('Form successfully send.');
 
-        // echo '<pre>';
-        // print_r($data);
-        // echo '</pre>';
         $this->sendDataEmail($data);
-        $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=filerequest&layout=send', false));
+        $this->setRedirect(Route::_($_SESSION['send']->remote_url, false));
 
         return true;
     }
@@ -67,7 +64,7 @@ class FileRequestController extends FormController
     public function sendDataEmail($data)
     {
         $params = ComponentHelper::getParams('com_download');
-        
+
         $body_manager = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                         <html xmlns="http://www.w3.org/1999/xhtml">
                         
@@ -81,7 +78,7 @@ class FileRequestController extends FormController
                             <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse; border: 1px solid #cccccc; padding: 10px 10px 10px 10px">
                                 <tr>
                                     <td style="padding: 10px 0 10px 0;">
-                                    There was a new request for access to ' . $_SESSION['product-info']->category . '.
+                                    There was a new request for access to ' . $_SESSION['send']->category . '.
                                     </td>
                                 </tr>
                                 <tr>
@@ -107,7 +104,7 @@ class FileRequestController extends FormController
                                 </tr>
                                 <hr>
                                 <tr>
-                                    <td>User try to download: ' . $_SESSION['product-info']->product . ' (id=' . $_SESSION['product-info']->cid . ')</td>
+                                    <td>User try to download: ' . $_SESSION['send']->product . ' (id=' .  $_SESSION['send']->cid. ')</td>
                                 </tr>
                             </table>
                         </body>
@@ -122,18 +119,15 @@ class FileRequestController extends FormController
         if (!empty($params->get('recipient_email_file_request_bcc'))) {
             $mailer_m->addBcc($params->get('recipient_email_file_request_bcc'));
         }
-        ;
-        if ($_SESSION['product-info']->action_stat == 'unknown id') {
+        if ($_SESSION['send']->action_id == 5) {
             $messageSubject = "User used unknown id";
         }
-        ;
-        if ($_SESSION['product-info']->action_stat == 'no file') {
+        if ($_SESSION['send']->action_id == 2) {
             $messageSubject = "No file on the server";
         }
-        if ($_SESSION['product-info']->action_stat == 'unpublished') {
+        if ($_SESSION['send']->action_id == 3) {
             $messageSubject = "Trying to download unpublished file";
         }
-        ;
         $mailer_m->setSubject("[" . $_SERVER['HTTP_HOST'] . "] " . $messageSubject);
         $mailer_m->setBody($body_manager);
         $mailer_m->send();

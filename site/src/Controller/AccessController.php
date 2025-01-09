@@ -15,7 +15,6 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Mailer\MailerFactoryInterface;
 
 defined('_JEXEC') or die;
 
@@ -60,7 +59,7 @@ class AccessController extends FormController
         // print_r($data);
         // echo '</pre>';
         $this->sendDataEmail($data);
-        $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=access&layout=send', false));
+        $this->setRedirect(Route::_($_SESSION['send']->remote_url, false));
 
         return true;
     }
@@ -82,7 +81,7 @@ class AccessController extends FormController
                                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse; border: 1px solid #cccccc; padding: 10px 10px 10px 10px">
                                     <tr>
                                         <td style="padding: 10px 0 10px 0;">
-                                        There was a new request for access to ' . $_SESSION['product-info']->category . '.
+                                        There was a new request for access to ' .  $_SESSION['send']->category . '.
                                         </td>
                                     </tr>
                                     <tr>
@@ -108,16 +107,14 @@ class AccessController extends FormController
                                     </tr>
                                     <hr>
                                     <tr>
-                                        <td>User try to download: ' . $_SESSION['product-info']->product . ' (id=' . $_SESSION['product-info']->cid . ')</td>
+                                        <td>User try to download: ' .$_SESSION['send']->product . ' (id=' .  $_SESSION['send']->cid. ')</td>
                                     </tr>
                                 </table>
                             </body>
                             
                             </html>';
 
-        // $mailer_m = Factory::getMailer();
-        $mailer_m = Factory::getContainer()->get(MailerFactoryInterface::class)->createMailer();
-        $mailer_m = new MailerFactoryInterface();
+        $mailer_m = Factory::getMailer();
         $mailer_m->IsHTML(true);
         $mailer_m->setSender($params->get('noreply_email'), $params->get('noreply_name'));
         $mailer_m->addRecipient($params->get('recipient_email_access'), $params->get('recipient_name_access'));

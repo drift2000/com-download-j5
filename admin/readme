@@ -1,0 +1,14 @@
+```
+<p>
+    <a href="index.php?option=com_download&amp;view=file&amp;f=1">download file</a> | 
+    <a href="index.php?option=com_download&amp;view=file&amp;f=5">no file to download</a> | 
+    <a href="index.php?option=com_download&amp;view=file&amp;f=3">no right to download</a> | 
+    <a href="index.php?option=com_download&amp;view=file&amp;f=7">unpublished file</a> | 
+    <a href="index.php?option=com_download&amp;view=file&amp;f=9">incorrect file</a> | 
+    <a href="index.php?option=com_download&amp;view=file&amp;f=0">unknown id</a>
+</p>
+<p>
+    <a href="index.php?option=com_download&amp;view=access&amp;layout=default">Access Form</a> | 
+    <a href="index.php?option=com_download&amp;view=filerequest&amp;layout=default">Request file Form</a>
+</p>
+```

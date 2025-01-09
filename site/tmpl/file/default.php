@@ -24,28 +24,30 @@ defined('_JEXEC') or exit();
 $data = $this->item;
 $download_file_url = "download/" . $data->filename;
 
-echo "<pre>";
-// print_r($data);
-print_r($data->remote_url);
-echo "<br>";
-print_r(base64_encode($data->remote_url));
-// print_r($data->usergroup);
-echo "</pre>";
+// echo "<pre>";
+// // print_r($data);
+// echo "<br>";
+// // print_r($data->remote_url);
+// echo "<br>";
+// // print_r(base64_encode($data->remote_url));
+// echo "<br>";
+// print_r($download_file_url);
+// echo "</pre>";
 
 if ($data->action_id == 0) {
     header("Location: /index.php?option=com_users&view=login&return=" . base64_encode($data->remote_url));
     exit();
 }
 if ($data->action_id == 1) {
-    header("Cache-Control: public");
-    header("Content-Description: File Transfer");
-    header("Content-Disposition: attachment; filename=" . $download_file_url);
-    header("Content-Type: application/zip");
-    header("Content-Transfer-Encoding: binary");
+    // header("Cache-Control: public");
+    // header("Content-Description: File Transfer");
+    // header("Content-Disposition: attachment; filename=" . $data->filename);
+    // header("Content-Type: application/zip");
+    // header("Content-Transfer-Encoding: binary");
 
     // read the file from disk
-    readfile(filename: $download_file_url);
-    // header("Location: /download/" . $data->filename);
+    // readfile(filename: $download_file_url);
+    header("Location: /download/" . $data->filename);
     exit();
 }
 if ($data->action_id == 2 || $data->action_id == 3) {
@@ -59,3 +61,8 @@ if ($data->action_id == 4) {
     exit();
 }
 exit();
+
+
+// $app = JFactory::getApplication();
+// $app->redirect('index.php?option=com_component');
+// $app->close();
