@@ -35,7 +35,10 @@ class AccessTable extends Table
         if ((trim($array['message'])) == '') {
             $array['message'] = Text::_('COM_DOWNLOAD_ACCESS_NO_MESSAGE');
         }
-
+        $array['download_file'] = $array['cid'] ?? '';
+        $array['page_name'] = $array['page_name'] ?? '';
+        $array['page_url'] = $array['remote_url'] ?? '';
+        
         return parent::bind($array, $ignore);
     }
 }

@@ -24,10 +24,12 @@ class FileRequestController extends FormController
     {
         $this->checkToken();
 
+        $send = (array) $_SESSION['send'];
         $app = $this->app;
         $model = $this->getModel('FileRequest');
         $table = $model->getTable();
         $data = $this->input->post->get('jform', [], 'array');
+        $data = array_merge($data, $send);
         $context = "$this->option.edit.$this->context";
 
         if (empty($key)) {
@@ -53,8 +55,14 @@ class FileRequestController extends FormController
             return false;
         }
 
-        $this->setMessage('Form successfully send.');
-
+        $this->setMessage(Text::_('COM_DOWNLOAD_REQUEST_SUCCESSFULLY_MESSAGE'));
+        // echo "<pre>";
+        // print_r($data1);
+        // print_r($data1['category']);
+        // print_r($data1['fullname']);
+        // print_r($data);
+        // print_r($send);
+        // echo "</pre>";
         $this->sendDataEmail($data);
         $this->setRedirect(Route::_($_SESSION['send']->remote_url, false));
 
@@ -70,7 +78,7 @@ class FileRequestController extends FormController
                         
                         <head>
                             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-                            <title>User tried to downlaod file</title>
+                            <title>User tried to download file</title>
                             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                         </head>
                         
@@ -78,7 +86,7 @@ class FileRequestController extends FormController
                             <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse; border: 1px solid #cccccc; padding: 10px 10px 10px 10px">
                                 <tr>
                                     <td style="padding: 10px 0 10px 0;">
-                                    There was a new request for access to ' . $_SESSION['send']->category . '.
+                                    There was a new request for access to ' . $data['category'] . '.
                                     </td>
                                 </tr>
                                 <tr>
@@ -104,7 +112,7 @@ class FileRequestController extends FormController
                                 </tr>
                                 <hr>
                                 <tr>
-                                    <td>User try to download: ' . $_SESSION['send']->product . ' (id=' .  $_SESSION['send']->cid. ')</td>
+                                    <td>User try to download: ' . $data['product'] . ' (id=' . $data['cid'] . ')</td>
                                 </tr>
                             </table>
                         </body>

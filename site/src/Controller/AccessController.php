@@ -24,10 +24,12 @@ class AccessController extends FormController
     {
         $this->checkToken();
 
+        $send = (array) $_SESSION['send'];
         $app = $this->app;
         $model = $this->getModel('Access');
         $table = $model->getTable();
         $data = $this->input->post->get('jform', [], 'array');
+        $data = array_merge($data, $send);
         $context = "$this->option.edit.$this->context";
 
         if (empty($key)) {
@@ -53,13 +55,9 @@ class AccessController extends FormController
             return false;
         }
 
-        $this->setMessage('Form successfully send.');
-
-        // echo '<pre>';
-        // print_r($data);
-        // echo '</pre>';
+        $this->setMessage(Text::_('COM_DOWNLOAD_ACCESS_SUCCESSFULLY_MESSAGE'));
         $this->sendDataEmail($data);
-        $this->setRedirect(Route::_($_SESSION['send']->remote_url, false));
+        $this->setRedirect(Route::_($data['remote_url'], false));
 
         return true;
     }
@@ -81,7 +79,7 @@ class AccessController extends FormController
                                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse; border: 1px solid #cccccc; padding: 10px 10px 10px 10px">
                                     <tr>
                                         <td style="padding: 10px 0 10px 0;">
-                                        There was a new request for access to ' .  $_SESSION['send']->category . '.
+                                        There was a new request for access to ' . $data['category'] . '.
                                         </td>
                                     </tr>
                                     <tr>
@@ -107,7 +105,7 @@ class AccessController extends FormController
                                     </tr>
                                     <hr>
                                     <tr>
-                                        <td>User try to download: ' .$_SESSION['send']->product . ' (id=' .  $_SESSION['send']->cid. ')</td>
+                                        <td>User try to download: ' . $data['product'] . ' (id=' . $data['cid'] . ')</td>
                                     </tr>
                                 </table>
                             </body>
